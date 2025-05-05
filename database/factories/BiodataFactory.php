@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class BiodataFactory extends Factory
 {
     protected $model = \App\Models\Biodata::class;
-    
+
     /**
      * Define the model's default state.
      *
@@ -25,7 +25,7 @@ class BiodataFactory extends Factory
 
         return [
             'nama' => $faker->name(),
-            'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
+            'jenis_kelamin' => $faker->randomElement(['Laki - laki', 'Perempuan']),
             'tgl_lahir' => $faker->date('Y-m-d', '2010-01-01'),
         ];
     }

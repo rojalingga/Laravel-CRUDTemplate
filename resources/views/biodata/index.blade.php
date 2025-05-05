@@ -64,7 +64,7 @@
                 </div>
                 <form id="formBiodata">
                     @csrf
-                    <input type="hidden" id="biodata_id" name="biodata_id">
+                    <input type="hidden" id="primary_id" name="primary_id">
                     <div class="modal-body">
                         <div class="form-group row mb-3">
                             <label for="nama" class="col-sm-4 col-form-label">Nama</label>
@@ -202,7 +202,7 @@
             var url = $(this).data('url');
             $.get(url, function(response) {
                 if (response.status === 'success') {
-                    $('#biodata_id').val(response.data.id);
+                    $('#primary_id').val(response.data.id);
                     $('#nama_id').val(response.data.nama);
                     $('#jenis_kelamin_id').val(response.data.jenis_kelamin).trigger('change');
                     $('#tgl_lahir_id').val(response.data.tgl_lahir);
@@ -212,7 +212,7 @@
 
         $('#modalForm').on('hidden.bs.modal', function() {
             $('#formBiodata')[0].reset();
-            $('#biodata_id').val('');
+            $('#primary_id').val('');
             $('#jenis_kelamin_id').val('').trigger('change');
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
@@ -222,7 +222,7 @@
         $('#formBiodata').on('submit', function(e) {
             e.preventDefault();
 
-            let id = $('#biodata_id').val();
+            let id = $('#primary_id').val();
             let url = id ? `/admin/biodata/${id}` : `/admin/biodata`;
             let method = id ? 'PUT' : 'POST';
 

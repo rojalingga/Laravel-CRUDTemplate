@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Biodata::factory(50)->create();
+        Biodata::factory(count: 1000)->create();
     }
 }
