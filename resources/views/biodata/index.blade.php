@@ -57,12 +57,12 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalFormLabel">Form Biodata</h5>
+                    <h5 class="modal-title" id="modalFormLabel">Form Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="formBiodata">
+                <form id="formData">
                     @csrf
                     <input type="hidden" id="primary_id" name="primary_id">
                     <div class="modal-body">
@@ -112,22 +112,6 @@
         });
 
         var audio = new Audio('{{ asset('audio/notification.ogg') }}');
-
-        @if (session('success'))
-            audio.play();
-            toastr.success("{{ session('success') }}", "BERHASIL", {
-                progressBar: true,
-                timeOut: 3500,
-                positionClass: "toast-bottom-right",
-            });
-        @elseif (session('error'))
-            audio.play();
-            toastr.error("{{ session('error') }}", "GAGAL!", {
-                progressBar: true,
-                timeOut: 3500,
-                positionClass: "toast-bottom-right",
-            });
-        @endif
 
         $(function() {
             var table = $('.data-table').DataTable({
@@ -211,7 +195,7 @@
         });
 
         $('#modalForm').on('hidden.bs.modal', function() {
-            $('#formBiodata')[0].reset();
+            $('#formData')[0].reset();
             $('#primary_id').val('');
             $('#jenis_kelamin_id').val('').trigger('change');
             $('.is-invalid').removeClass('is-invalid');
@@ -219,26 +203,26 @@
         });
 
         // Simpan / Update data
-        $('#formBiodata').on('submit', function(e) {
+        $('#formData').on('submit', function(e) {
             e.preventDefault();
 
             let id = $('#primary_id').val();
-            let url = id ? `/admin/biodata/${id}` : `/admin/biodata`;
+            let url = id ? '{{ route('biodata.update', ['biodata' => ':id']) }}'.replace(':id', id) :
+                '{{ route('biodata.store') }}';
             let method = id ? 'PUT' : 'POST';
 
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
+            let formData = new FormData(this); // Ambil semua data input dalam form
+            formData.append('_method', method); // Laravel butuh method override via _method
+
             $.ajax({
                 url: url,
                 method: 'POST',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    _method: method,
-                    nama: $('#nama_id').val(),
-                    jenis_kelamin: $('#jenis_kelamin_id').val(),
-                    tgl_lahir: $('#tgl_lahir_id').val()
-                },
+                data: formData,
+                contentType: false, // Penting untuk FormData
+                processData: false, // Penting untuk FormData
                 success: function() {
                     $('#modalForm').modal('hide');
                     audio.play();
@@ -257,16 +241,16 @@
                             timeOut: 3500,
                             positionClass: "toast-bottom-right",
                         });
+
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function(key, val) {
-                            let input = $('#' + key + '_id');
+                            let input = $('#' + key);
                             input.addClass('is-invalid');
-                            let formGroup = input.parent();
-                            formGroup.append(
+                            input.parent().find('.invalid-feedback').remove();
+                            input.parent().append(
                                 '<span class="invalid-feedback" role="alert"><strong>' +
                                 val[0] + '</strong></span>'
                             );
-
                         });
                     }
                 }
