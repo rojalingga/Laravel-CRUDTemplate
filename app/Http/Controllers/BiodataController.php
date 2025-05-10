@@ -53,7 +53,7 @@ class BiodataController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255|unique:data_diri,nama,',
             'jenis_kelamin' => 'required|in:Laki - laki,Perempuan',
             'tgl_lahir' => 'required|date',
@@ -81,7 +81,7 @@ class BiodataController extends Controller
     {
         $biodata = Biodata::findOrFail($id);
 
-        $validated = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255|unique:data_diri,nama,' . $biodata->id . ',id',
             'jenis_kelamin' => 'required|in:Laki - laki,Perempuan',
             'tgl_lahir' => 'required|date',
@@ -99,7 +99,7 @@ class BiodataController extends Controller
             'jenis_kelamin'          => $request->jenis_kelamin,
             'tgl_lahir'              => $request->tgl_lahir,
         ];
-        
+
         $biodata->update($db);
 
         return response()->json(['status' => 'success']);
