@@ -66,7 +66,13 @@ class BiodataController extends Controller
             'tgl_lahir.date' => 'Format tanggal lahir tidak valid.',
         ]);
 
-        Biodata::create($validated);
+        $db = [
+            'nama'          => $request->nama,
+            'jenis_kelamin'          => $request->jenis_kelamin,
+            'tgl_lahir'              => $request->tgl_lahir,
+        ];
+
+        Biodata::create($db);
 
         return response()->json(['status' => 'success']);
     }
@@ -87,8 +93,14 @@ class BiodataController extends Controller
             'tgl_lahir.required' => 'Tanggal lahir wajib diisi.',
             'tgl_lahir.date' => 'Format tanggal lahir tidak valid.',
         ]);
+
+        $db = [
+            'nama'          => $request->nama,
+            'jenis_kelamin'          => $request->jenis_kelamin,
+            'tgl_lahir'              => $request->tgl_lahir,
+        ];
         
-        $biodata->update($validated);
+        $biodata->update($db);
 
         return response()->json(['status' => 'success']);
     }
