@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Template CRUD Modal</title>
+    <title>Template CRUD Laravel</title>
 
     <link href="{{ asset('templates/img/fotoadmin.jpg') }}" rel="icon">
 
@@ -67,16 +67,7 @@
                             class="fas fa-bars text-white"></i></a>
                 </li>
             </ul>
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto mr-3">
-                <!-- User Profile Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fas fa-user-circle mr-2 text-white"></i>
-                        <span class="text-white">User</span>
-                    </a>
-                </li>
-            </ul>
+            
         </nav>
         <!-- /.navbar -->
 
@@ -96,12 +87,18 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
 
-                        <!-- Biodata -->
                         <li class="nav-item">
-                            <a href="{{ route('biodata.index') }}"
-                                class="nav-link {{ request()->routeIs('biodata.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Biodata</p>
+                            <a href="{{ route('crud-modal.index') }}"
+                                class="nav-link {{ request()->routeIs('crud-modal.index') ? 'active' : '' }}">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>CRUD Modal</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('crud-page.index') }}"
+                                class="nav-link {{ request()->routeIs('crud-page.index') ? 'active' : '' }}">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>CRUD Page</p>
                             </a>
                         </li>
 
@@ -119,7 +116,7 @@
 
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; {{ date('Y') }} <a href="#">TEMPLATE CRUD MODAL</a>.</strong>
+            <strong>Copyright &copy; {{ date('Y') }} <a href="#">Rojalingga</a>.</strong>
         </footer>
 
         <!-- Control Sidebar -->

@@ -9,13 +9,12 @@ class Biodata extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_diri';
+    protected $table = 'biodata';
     public $timestamps = false;
 
     protected $fillable = [
         'nama',
         'jenis_kelamin',
         'tgl_lahir',
-        'foto',
     ];   
 }

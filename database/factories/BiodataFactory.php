@@ -25,7 +25,7 @@ class BiodataFactory extends Factory
 
         return [
             'nama' => $faker->name(),
-            'jenis_kelamin' => $faker->randomElement(['Laki - laki', 'Perempuan']),
+            'jenis_kelamin' => $faker->randomElement([1, 2]),
             'tgl_lahir' => $faker->date('Y-m-d', '2010-01-01'),
         ];
     }
