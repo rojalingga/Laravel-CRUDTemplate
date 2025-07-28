@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Biodata;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class CRUDPageController extends Controller
@@ -72,15 +73,27 @@ class CRUDPageController extends Controller
 
         $request->validate($rules, $messages);
 
-        $db = [
-            'nama' => $request->nama,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tgl_lahir' => $request->tgl_lahir,
-        ];
+        DB::beginTransaction();
+        try {
 
-        Biodata::create($db);
+            $db = [
+                'nama' => $request->nama,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'tgl_lahir' => $request->tgl_lahir,
+            ];
 
-        return response()->json(['status' => 'success']);
+            Biodata::create($db);
+
+            DB::commit();
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function update(Request $request, $id)
@@ -103,15 +116,27 @@ class CRUDPageController extends Controller
 
         $request->validate($rules, $messages);
 
-        $db = [
-            'nama' => $request->nama,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tgl_lahir' => $request->tgl_lahir,
-        ];
+        DB::beginTransaction();
+        try {
 
-        $data->update($db);
+            $db = [
+                'nama' => $request->nama,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'tgl_lahir' => $request->tgl_lahir,
+            ];
 
-        return response()->json(['status' => 'success']);
+            $data->update($db);
+
+            DB::commit();
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function destroy($id)
