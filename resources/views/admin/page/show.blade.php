@@ -46,6 +46,19 @@
                                                 value="{{ $data->tgl_lahir }}">
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">Foto</label>
+                                        <div class="col-sm-3">
+                                            <input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png">
+                                            @if (!empty($data->foto))
+                                                <small class="text-primary lihat-foto"
+                                                    data-src="{{ asset('assets/foto/' . $data->foto) }}"
+                                                    style="cursor:pointer;" data-title="Foto">
+                                                    Lihat Foto
+                                                </small>
+                                            @endif
+                                        </div>
+                                    </div>
 
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary ms-1" id="submitBtn">
@@ -62,6 +75,25 @@
             </div>
         </section>
     </div>
+
+    <div class="modal fade" id="modalFoto" tabindex="-1" role="dialog" data-focus="false"
+        aria-labelledby="modalFotoLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white font-weight-bold" id="modalFotoLabel">Foto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center" id="modalFotoContent">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script>
@@ -71,6 +103,25 @@
                 minimumResultsForSearch: Infinity,
                 placeholder: "Pilih Jenis Kelamin",
             });
+        });
+        
+        $(document).on('click', '.lihat-foto', function() {
+            let src = $(this).data('src');
+            let title = $(this).data('title') || 'Foto';
+
+            $('#modalFotoLabel').text(title);
+
+            let ext = src.split('.').pop().toLowerCase();
+
+            let content = '';
+            if (ext === 'pdf') {
+                content = `<iframe src="${src}" width="100%" height="600px"></iframe>`;
+            } else {
+                content = `<img src="${src}" alt="Lampiran" class="img-fluid rounded shadow">`;
+            }
+
+            $('#modalFotoContent').html(content);
+            $('#modalFoto').modal('show');
         });
 
         var audio = new Audio('{{ asset('audio/notification.ogg') }}');

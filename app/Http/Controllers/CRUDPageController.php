@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Biodata;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -61,6 +62,7 @@ class CRUDPageController extends Controller
             'nama' => 'required|unique:biodata,nama',
             'jenis_kelamin' => 'required',
             'tgl_lahir' => 'required|date',
+            'foto' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
 
         $messages = [
@@ -69,6 +71,9 @@ class CRUDPageController extends Controller
             'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
             'tgl_lahir.required' => 'Tanggal lahir wajib diisi.',
             'tgl_lahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
+            'foto.file' => 'Foto harus berupa file.',
+            'foto.mimes' => 'Format foto harus jpeg, png, atau jpg.',
+            'foto.max' => 'Ukuran foto maksimal 2MB.',
         ];
 
         $request->validate($rules, $messages);
@@ -76,10 +81,19 @@ class CRUDPageController extends Controller
         DB::beginTransaction();
         try {
 
+            if ($request->hasFile('foto')) {
+                $foto = $request->file('foto');
+                $ext = $foto->getClientOriginalExtension();
+
+                $filename = Str::random(25) . '.' . $ext;
+                $foto->move(public_path('assets/foto/'), $filename);
+            }
+
             $db = [
                 'nama' => $request->nama,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'tgl_lahir' => $request->tgl_lahir,
+                'foto' => $filename ?? ''
             ];
 
             Biodata::create($db);
@@ -104,6 +118,7 @@ class CRUDPageController extends Controller
             'nama' => 'required|unique:biodata,nama,' . $data->id . ',id',
             'jenis_kelamin' => 'required',
             'tgl_lahir' => 'required|date',
+            'foto' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
 
         $messages = [
@@ -112,6 +127,9 @@ class CRUDPageController extends Controller
             'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
             'tgl_lahir.required' => 'Tanggal lahir wajib diisi.',
             'tgl_lahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
+            'foto.file' => 'Foto harus berupa file.',
+            'foto.mimes' => 'Format foto harus jpeg, png, atau jpg.',
+            'foto.max' => 'Ukuran foto maksimal 2MB.',
         ];
 
         $request->validate($rules, $messages);
@@ -119,10 +137,19 @@ class CRUDPageController extends Controller
         DB::beginTransaction();
         try {
 
+            if ($request->hasFile('foto')) {
+                $foto = $request->file('foto');
+                $ext = $foto->getClientOriginalExtension();
+
+                $filename = Str::random(25) . '.' . $ext;
+                $foto->move(public_path('assets/foto/'), $filename);
+            }
+
             $db = [
                 'nama' => $request->nama,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'tgl_lahir' => $request->tgl_lahir,
+                'foto' => $filename ?? ''
             ];
 
             $data->update($db);
@@ -141,10 +168,21 @@ class CRUDPageController extends Controller
 
     public function destroy($id)
     {
-        $data = Biodata::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $data = Biodata::findOrFail($id);
+            $data->delete();
 
-        $data->delete();
+            DB::commit();
 
-        return response()->json(['status' => 'success']);
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

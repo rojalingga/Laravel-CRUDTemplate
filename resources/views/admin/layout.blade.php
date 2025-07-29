@@ -96,7 +96,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('crud-page.index') }}"
-                                class="nav-link {{ request()->routeIs('crud-page.index') ? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('crud-page.index', 'crud-page.create', 'crud-page.show') ? 'active' : '' }}">
                                 <i class="nav-icon far fa-circle"></i>
                                 <p>CRUD Page</p>
                             </a>

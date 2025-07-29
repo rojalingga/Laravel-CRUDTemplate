@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('jenis_kelamin');
             $table->date('tgl_lahir');
+            $table->string('foto');
         });
 
         Schema::create('sessions', function (Blueprint $table) {

@@ -53,7 +53,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="formData">
+                    <form id="formData" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="primary_id" name="primary_id">
                         <div class="modal-body">
@@ -78,6 +78,18 @@
                                 <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
                                 <div class="col-sm-8">
                                     <input type="date" name="tgl_lahir" id="tgl_lahir" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Foto</label>
+                                <div class="col-sm-8">
+                                    <input type="file" name="foto" id="foto" accept=".jpg, .jpeg, .png">
+                                    <div class="d-flex gap-1 mt-1 align-items-center small">
+                                        <div id="lihat-foto-wrapper" class="d-none">
+                                            <a href="#" target="_blank" id="lihat-foto" class="text-primary">Lihat
+                                                Foto</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -172,6 +184,17 @@
                     $('#nama').val(response.data.nama);
                     $('#jenis_kelamin').val(response.data.jenis_kelamin).trigger('change');
                     $('#tgl_lahir').val(response.data.tgl_lahir);
+
+                    if (response.data.foto) {
+                        const file = response.data.foto;
+                        $('#lihat-foto')
+                            .attr('href', '/assets/foto/' + file)
+                            .attr('data-file', file);
+                        $('#lihat-foto-wrapper').removeClass('d-none');
+                    } else {
+                        $('#lihat-foto-wrapper').addClass('d-none');
+                    }
+
                     $('#modalForm').modal('show');
                 }
             });

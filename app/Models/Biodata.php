@@ -16,5 +16,6 @@ class Biodata extends Model
         'nama',
         'jenis_kelamin',
         'tgl_lahir',
+        'foto',
     ];   
 }

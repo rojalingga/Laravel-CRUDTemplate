@@ -42,6 +42,12 @@
                                             <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">Foto</label>
+                                        <div class="col-sm-3">
+                                            <input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png">
+                                        </div>
+                                    </div>
 
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary ms-1" id="submitBtn">
