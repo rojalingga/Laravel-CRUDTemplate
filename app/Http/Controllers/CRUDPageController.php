@@ -138,6 +138,10 @@ class CRUDPageController extends Controller
         try {
 
             if ($request->hasFile('foto')) {
+                if (!empty($data->foto) && file_exists(public_path('assets/foto/' . $data->foto))) {
+                    unlink(public_path('assets/foto/' . $data->foto));
+                }
+
                 $foto = $request->file('foto');
                 $ext = $foto->getClientOriginalExtension();
 
