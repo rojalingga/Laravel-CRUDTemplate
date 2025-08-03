@@ -42,71 +42,70 @@
                 </div>
             </div>
         </section>
-
-        <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-focus="false"
-            aria-labelledby="modalFormLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white font-weight-bold" id="modalFormLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form id="formData" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" id="primary_id" name="primary_id">
-                        <div class="modal-body">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Nama</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="nama" id="nama" class="form-control">
-                                </div>
+    </div>
+    
+    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-focus="false"
+        aria-labelledby="modalFormLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white font-weight-bold" id="modalFormLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formData" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" id="primary_id" name="primary_id">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Nama</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="nama" id="nama" class="form-control">
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
-                                <div class="col-sm-8">
-                                    <select name="jenis_kelamin" id="jenis_kelamin"
-                                        class="form-control select-jenis-kelamin">
-                                        <option value=""></option>
-                                        <option value="1">Laki - laki</option>
-                                        <option value="2">Perempuan</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+                            <div class="col-sm-8">
+                                <select name="jenis_kelamin" id="jenis_kelamin"
+                                    class="form-control select-jenis-kelamin">
+                                    <option value=""></option>
+                                    <option value="1">Laki - laki</option>
+                                    <option value="2">Perempuan</option>
+                                </select>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
-                                <div class="col-sm-8">
-                                    <input type="date" name="tgl_lahir" id="tgl_lahir" class="form-control">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+                            <div class="col-sm-8">
+                                <input type="date" name="tgl_lahir" id="tgl_lahir" class="form-control">
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Foto</label>
-                                <div class="col-sm-8">
-                                    <input type="file" name="foto" id="foto" accept=".jpg, .jpeg, .png">
-                                    <div class="d-flex gap-1 mt-1 align-items-center small">
-                                        <div id="lihat-foto-wrapper" class="d-none">
-                                            <a href="#" target="_blank" id="lihat-foto" class="text-primary">Lihat
-                                                Foto</a>
-                                        </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Foto</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="foto" id="foto" accept=".jpg, .jpeg, .png">
+                                <div class="d-flex gap-1 mt-1 align-items-center small">
+                                    <div id="lihat-foto-wrapper" class="d-none">
+                                        <a href="#" target="_blank" id="lihat-foto" class="text-primary">Lihat
+                                            Foto</a>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary ms-1" id="submitBtn">
-                                    <span class="spinner-border spinner-border-sm mx-1 d-none" role="status"
-                                        aria-hidden="true"></span>
-                                    <span class="button-text">Simpan</span>
-                                </button>
-                            </div>
                         </div>
-                    </form>
-                </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary ms-1" id="submitBtn">
+                                <span class="spinner-border spinner-border-sm mx-1 d-none" role="status"
+                                    aria-hidden="true"></span>
+                                <span class="button-text">Simpan</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-
     </div>
 @endsection
 @push('scripts')
